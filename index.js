@@ -59,6 +59,11 @@ const extractTextFromFile = async (filePath, fileType) => {
 
 app.post('/upload-and-translate', upload.single('file'), async (req, res) => {
     const { targetLang, sourceLang } = req.body;
+
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded.' });
+    }
+
     const filePath = req.file.path;
     const fileName = req.file.originalname;
     const fileType = req.file.mimetype;
